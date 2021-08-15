@@ -1,0 +1,64 @@
+$bg-color: black;
+
+.tooltip {
+  $root: &;
+  position: relative;
+
+  &__content {
+    position: absolute;
+    z-index: 1001;
+    display: none;
+    background-color: $bg-color;
+    color: #fff;
+    padding: 5px;
+    border-radius: 6px;
+    font-size: 1.5rem;
+
+    /* Position the tooltip text - see examples below! */
+    //$width: 300px;
+    $width: auto;
+    width: $width;
+    min-width: 12em;
+    //min-height: 1.5em;
+    bottom: 100%;
+    left: 0;
+    //text-wrap: none;
+    //margin-left: -$width/2;
+    margin: 1rem auto;
+    &::after {
+      content: ' ';
+      position: absolute;
+      width: 0;
+      height: 0;
+      bottom: -1rem;
+      left: 30%;
+      border-left: 0.8rem solid transparent;
+      border-right: 0.8rem solid transparent;
+      border-top: 1rem solid $bg-color;
+    }
+    &_left {
+      &::after {
+        left: 80%;
+      }
+      left: -9em;
+    }
+    &_right {
+      left: 100%;
+    }
+  }
+  &:hover {
+    #{$root}__content {
+      display: block;
+      animation: 0.5s linear bg-opacity;
+    }
+  }
+}
+
+@keyframes bg-opacity {
+  0% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}

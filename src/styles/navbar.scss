@@ -1,0 +1,16 @@
+@import 'lib/width';
+@import 'lib/navbar';
+
+.navbar {
+  @include navbar;
+  &__item {
+    &_admin,
+    &_cars {
+      @include size-md(4);
+    }
+    &_admin {
+      @include offset-md(4);
+      text-align: right;
+    }
+  }
+}

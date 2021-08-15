@@ -1,0 +1,142 @@
+$cols: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+$col_number: 12;
+$columns: $col_number;
+$col_unit: 1 / $col_number;
+
+$break_lg: 1800px;
+$break_md: 960px;
+$break_sm: 780px;
+$break_xs: 560px;
+
+$offset: 0px;
+$offset_lg: $offset;
+$offset_md: $offset;
+$offset_sm: $offset;
+$offset_xs: $offset;
+
+// .col {
+//   flex-grow: 0;
+//   flex-shrink: 0;
+//   flex-basis: 0%;
+// }
+
+// @function col() {
+//   width: auto;
+// }
+
+// @mixin width($n: 0) {
+//   @if ($n == 0) {
+//     width: auto;
+//   } @else {
+//     @if ($n > $col_number) {
+//       $n: $col_number;
+//     }
+//     width: ($n * $col_unit) * 100%;
+//   }
+// }
+
+// @each $col in $cols {
+//   .col-#{$col} {
+//     width: ($col * $col_unit) * 100%;
+//   }
+// }
+
+@mixin size($n: 0) {
+  @if ($n == 0) {
+    width: auto;
+  } @else {
+    @if ($n > $columns) {
+      $n: $columns;
+    }
+    $val: 100% / $columns * $n;
+    width: #{calc(#{$val} - #{$offset})};
+  }
+}
+
+@mixin size-lg($n) {
+  $val: 100% / $columns * $n;
+  @include lg(width, #{calc(#{$val} - #{$offset_lg})});
+}
+
+@mixin size-md($n) {
+  $val: 100% / $columns * $n;
+  @include md(width, #{calc(#{$val} - #{$offset_md})});
+}
+
+@mixin size-sm($n) {
+  $val: 100% / $columns * $n;
+  @include sm(width, #{calc(#{$val} - #{$offset_sm})});
+}
+
+@mixin size-xs($n) {
+  $val: 100% / $columns * $n;
+  @include xs(width, #{calc(#{$val} - #{$offset_xs})});
+}
+
+@mixin offset-lg($n) {
+  $val: 100% / $columns * $n;
+  @include lg(margin-left, #{calc(#{$val} - #{$offset_lg})});
+}
+
+@mixin offset-md($n) {
+  $val: 100% / $columns * $n;
+  @include md(margin-left, #{calc(#{$val} - #{$offset_md})});
+}
+
+@mixin offset-sm($n) {
+  $val: 100% / $columns * $n;
+  @include sm(margin-left, #{calc(#{$val} - #{$offset_sm})});
+}
+
+@mixin offset-xs($n) {
+  $val: 100% / $columns * $n;
+  @include xs(margin-left, #{calc(#{$val} - #{$offset_xs})});
+}
+
+@mixin lg($name, $value) {
+  @media screen and (min-width: $break_md) {
+    #{$name}: $value;
+  }
+}
+
+@mixin lg-block() {
+  @media screen and (min-width: $break_md) {
+    @content;
+  }
+}
+
+@mixin md($name, $value) {
+  @media screen and (min-width: $break_md) {
+    #{$name}: $value;
+  }
+}
+
+@mixin md-block() {
+  @media screen and (min-width: $break_md) {
+    @content;
+  }
+}
+
+@mixin sm($name, $value) {
+  @media screen and (min-width: $break_sm) {
+    #{$name}: $value;
+  }
+}
+
+@mixin sm-block() {
+  @media screen and (min-width: $break_sm) {
+    @content;
+  }
+}
+
+@mixin xs($name, $value) {
+  @media screen and (min-width: $break_xs) {
+    #{$name}: $value;
+  }
+}
+
+@mixin xs-block() {
+  @media screen and (min-width: $break_xs) {
+    @content;
+  }
+}

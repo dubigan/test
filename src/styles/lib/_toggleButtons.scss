@@ -1,0 +1,32 @@
+@use 'row';
+@use 'buttons';
+@use 'width';
+
+.toggleButtonGroup {
+  //@include forms.oak-form-control;
+  @include row.row-nowrap;
+  padding: 0px;
+  margin: 0.1rem 0rem;
+  border-style: none;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  &__label {
+    @include buttons.btn-outline-primary;
+    @include width.size(5.9);
+    text-align: center;
+    //width: 100%;
+    margin: 0px;
+    & active {
+      @include buttons.btn-primary;
+      //@include width.size(4);
+      //text-align: center;
+      //width: 100%;
+      //margin: 0px;
+    }
+  }
+  &__input {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+  }
+}

@@ -1,0 +1,27 @@
+.oak-tooltip {
+  position: relative;
+
+  &:hover {
+    .tooltip-content {
+      display: block;
+    }
+  }
+}
+
+.tooltip-content {
+  position: absolute;
+  z-index: 1001;
+  display: none;
+  background-color: black;
+  color: #fff;
+  padding: 5px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+
+  /* Position the tooltip text - see examples below! */
+  $width: 300px;
+  width: $width;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -$width/2;
+}

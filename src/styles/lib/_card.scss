@@ -1,0 +1,84 @@
+@use 'vars';
+@use 'row';
+@use 'buttons';
+@use 'width';
+
+@mixin card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+  &__header,
+  &__footer,
+  &__row {
+    @include row.row-nowrap;
+  }
+  &__header,
+  &__footer {
+    justify-content: space-between;
+  }
+  &__title {
+    padding: 1rem 1rem;
+    font-size: 2.4rem;
+    font-weight: 400;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  &__header {
+    padding: 1rem 1rem;
+    margin-bottom: 0;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  }
+  &__body {
+    flex: 1 1 auto;
+    padding: 1rem 1rem;
+  }
+  &__footer {
+    padding: 1rem 1rem;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+  }
+}
+
+@mixin multiformCard {
+  @include card;
+  &__btnAdd {
+    @include buttons.btn-primary;
+    @include width.size(3);
+  }
+  &__btnDel {
+    @include buttons.btn-danger;
+    @include width.size(0); // width: auto
+  }
+}
+
+.card {
+  @include card;
+}
+
+.multiformCard {
+  @include multiformCard;
+}
+
+// .oak-card-header {
+//   padding: 0.5rem 1rem;
+//   margin-bottom: 0;
+//   background-color: rgba(0, 0, 0, 0.03);
+//   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+// }
+
+// .oak-card-body {
+//   flex: 1 1 auto;
+//   padding: 1rem 1rem;
+// }
+
+// .oak-card-footer {
+//   padding: 0.5rem 1rem;
+//   background-color: rgba(0, 0, 0, 0.03);
+//   border-top: 1px solid rgba(0, 0, 0, 0.125);
+// }

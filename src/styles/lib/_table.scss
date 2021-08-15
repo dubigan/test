@@ -1,0 +1,86 @@
+@import 'row';
+
+$color-primary: rgb(0, 100, 255);
+$table-font-size: 1.6rem;
+$table-bg: transparent;
+$table-striped-color: #212529;
+$table-striped-bg: rgba(0, 0, 0, 0.05);
+$table-active-color: #212529;
+$table-active-bg: rgba(0, 0, 0, 0.1);
+$table-hover-color: #212529;
+$table-hover-bg: rgba(0, 0, 0, 0.075);
+$table-border-color: #dee2e6;
+
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: $table-striped-color;
+  vertical-align: top;
+  border-color: $table-border-color;
+  caption-side: bottom;
+  border-collapse: collapse;
+  text-indent: initial;
+  border-spacing: 2px;
+  & > tbody {
+    vertical-align: inherit;
+  }
+  &_bordered {
+    border: 1px solid $table-border-color;
+    & td th {
+      border: 1px solid $table-border-color;
+    }
+    // & > :not(caption) > * {
+    //   border-width: 1px 0;
+    // }
+  }
+  &_striped > tbody > tr:nth-of-type(odd) {
+    background-color: $table-striped-bg;
+    color: $table-striped-color;
+  }
+  &_hover {
+    tr:hover {
+      background-color: $table-hover-bg;
+    }
+  }
+}
+
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
+  border-color: inherit;
+  border-style: solid;
+  border-width: inherit;
+}
+
+tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+tr {
+  display: table-row;
+  vertical-align: inherit;
+  border-color: inherit;
+}
+
+th {
+  display: table-cell;
+  vertical-align: bottom;
+  opacity: 1;
+  font-size: $table-font-size;
+  padding: 1.2rem;
+  //background-color: white;
+  //color: black;
+}
+
+td {
+  display: table-cell;
+  vertical-align: middle;
+  color: $table-active-color;
+  font-size: $table-font-size;
+  padding: 1.2rem;
+}

@@ -1,0 +1,26 @@
+.oak-h1,
+.oak-h2,
+.oak-h3,
+.oak-h4,
+.oak-h5,
+.oak-h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.oak-h4,
+h4 {
+  font-size: calc(1.275rem + 0.3vw);
+}
+
+.oak-fs5 {
+  font-size: 1.25rem !important;
+}

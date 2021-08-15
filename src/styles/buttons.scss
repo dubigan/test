@@ -1,0 +1,13 @@
+@import 'lib/width';
+
+.btn-primary {
+  &_add {
+    @include size(12);
+  }
+}
+
+.btn-danger {
+  &_del {
+    @include size(6);
+  }
+}
