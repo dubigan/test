@@ -1,24 +1,24 @@
-import React from "react";
-import ListOfItems from "../../components/List/ListOfItems";
-import { TListOfItemsProps, TItemFunctions } from "../../components/List/ListTypes";
-import { TCarItem } from "../../components/Detail/DetailTypes";
-import { useListFunctions } from "../../components/List/useListFunctions";
+import React from 'react';
+import ListOfItems from '../../components/List/ListOfItems';
+import { TListOfItemsProps, TItemFunctions } from '../../components/List/ListTypes';
+import { TCarItem } from '../../components/Detail/DetailTypes';
+import { useListFunctions } from '../../components/List/useListFunctions';
+import Header from '../../components/Header/Header';
 
 const Cars = (props: TListOfItemsProps<TCarItem>) => {
-    // componentDidUpdate(prevProps: TListOfItemsProps, prevState: TListOfItemsState<TCarItem>) {
-    //   super.componentDidUpdate(prevProps, prevState);
-    //   if (prevProps.owner !== this.props.owner) this.getItems();
-    // }
-    const functions = useListFunctions("cars");
-    // console.log('Cars.owner', props.owner);
+  const functions = useListFunctions('cars');
+  // console.log('Cars.owner', props.owner);
 
-    return (
-        <ListOfItems<TCarItem>
-            owner={props.owner}
-            withAlerts={props.withAlerts}
-            functions={functions as TItemFunctions<TCarItem>}
-        />
-    );
+  return (
+    <>
+      <Header />
+      <ListOfItems<TCarItem>
+        owner={props.owner}
+        withAlerts={props.withAlerts}
+        functions={functions as TItemFunctions<TCarItem>}
+      />
+    </>
+  );
 };
 
 export default Cars;
