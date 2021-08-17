@@ -98,12 +98,13 @@ const ListOfItems = <TItem extends TBaseItem>(props: TListOfItemsProps<TItem>) =
         //console.log('btnEditClick', item_pk);
 
         try {
-            const res = await axios.post(props.functions.url, {
+            console.log("ListOfItems.btnEditClick.props", props);
+            const res = await api.queryServer(props.functions.url, {
                 btn_edit: "",
                 item_pk: item_pk,
                 url: window.location.pathname,
             });
-            if (res.data.redirect) {
+            if (res.data?.redirect) {
                 //console.log('btnEditClick.history', this.props);
 
                 //window.location.href = res.data['redirect'];
@@ -112,7 +113,7 @@ const ListOfItems = <TItem extends TBaseItem>(props: TListOfItemsProps<TItem>) =
         } catch (err) {
             //console.log('btnEditClick.catch', err);
 
-            context.setAlerts({ messages: getErrors(err.response.data) });
+            context.setAlerts({ messages: getErrors(err.response?.data) });
         }
     };
 

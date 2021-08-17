@@ -24,6 +24,8 @@ import { AlertContext } from "../../components/lib/alert/AlertContext";
 import { useListFunctions } from "../../components/List/useListFunctions";
 import { TextField } from "../../components/lib/input/TextField";
 import { TextArea } from "../../components/lib/input/TextArea";
+import Header from "../../components/Header/Header";
+import api from "../api/api";
 
 const OwnerDetail = () => {
     const functions = useDetailFunctions("owner");
@@ -38,7 +40,7 @@ const OwnerDetail = () => {
     const btnNewCarClick = async () => {
         if (!detailUtils.item) return;
         try {
-            const res = await axios.post(functions.url, {
+            const res = await api.queryServer(functions.url, {
                 btn_add: "",
                 url: window.location.pathname,
                 owner_pk: detailUtils.item!.id,
@@ -65,6 +67,7 @@ const OwnerDetail = () => {
     return (
         <div>
             <Alerts />
+            <Header />
             <Card>
                 <Card.Title>Автовладелец</Card.Title>
                 <Card.Body>

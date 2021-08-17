@@ -4,6 +4,7 @@ import axios from "axios";
 import { AlertContext } from "../lib/alert/AlertContext";
 import { TDetailOfItemsProps, TDetailUtils } from "./DetailTypes";
 import { getErrors, redirect } from "../lib/utils/utils";
+import api from "../../pages/api/api";
 
 export const useDetailOfItem = <TItem>({
     functions,
@@ -27,7 +28,7 @@ export const useDetailOfItem = <TItem>({
     return {
         getItem: async () => {
             try {
-                const res = await axios.post(functions.url, {});
+                const res = await api.getItem(functions.url);
                 //console.log('getItem.history', this.props.history);
                 redirect(history, res.data.redirect);
 
