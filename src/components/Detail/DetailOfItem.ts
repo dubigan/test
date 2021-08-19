@@ -1,6 +1,5 @@
 import { ChangeEvent, useContext, useState } from "react";
 import { useRouter } from "next/router";
-import axios from "axios";
 import { AlertContext } from "../lib/alert/AlertContext";
 import { TDetailOfItemsProps, TDetailUtils } from "./DetailTypes";
 import { getErrors, redirect } from "../lib/utils/utils";
@@ -27,14 +26,16 @@ export const useDetailOfItem = <TItem>({
 
     return {
         getItem: async () => {
-            const item_pk = sessionStorage.getItem("item_pk") ?? -1;
+            const item_pk = sessionStorage.getItem(functions.idKey) ?? -1;
             console.log("getItem.item_pk: ", item_pk);
             try {
-                const res = await api.queryServer(functions.url, { item_pk });
-                console.log("DetailOfItem.getItem.data", res.data);
+                const res = await api.queryServer(functions.url, { [functions.idKey]: item_pk });
+                // console.log("DetailOfItem.getItem.data", res.data);
                 redirect(history, res.data.redirect);
 
-                setItem(getItemFromData(res.data));
+                const data = getItemFromData(res.data);
+                console.log("DetailOfItem.getItem.data", data);
+                setItem(data);
             } catch (err) {
                 context.setAlerts({ messages: getErrors(err.response?.data) });
             }

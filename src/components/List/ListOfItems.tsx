@@ -13,6 +13,7 @@ import { TSortedBy } from "./ListTypes";
 import DeleteDialog from "../DeleteDialog/DeleteDialog";
 import { TListOfItemsProps, TListItems } from "./ListTypes";
 import { TBaseItem } from "../Detail/DetailTypes";
+import { redirect } from "../lib/utils/utils";
 
 const ListOfItems = <TItem extends TBaseItem>(props: TListOfItemsProps<TItem>) => {
     const context = useContext(AlertContext);
@@ -84,10 +85,7 @@ const ListOfItems = <TItem extends TBaseItem>(props: TListOfItemsProps<TItem>) =
     const btnAddClick = async (e: MouseEvent<HTMLElement>) => {
         try {
             const res = await api.queryServer(props.functions.url, { btn_add: "" });
-            if (res.data.redirect) {
-                //window.location.href = res.data['redirect'];
-                history.push(res.data.redirect);
-            }
+            redirect(history, res.data.redirect);
         } catch (err) {
             context.setAlerts({ messages: getErrors(err.response?.data) });
         }
@@ -96,20 +94,8 @@ const ListOfItems = <TItem extends TBaseItem>(props: TListOfItemsProps<TItem>) =
     const btnEditClick = (e: MouseEvent<HTMLButtonElement>) => {
         const item_pk = (e.target as HTMLButtonElement).value;
 
-        // try {
-        //   const res = await api.queryServer(props.functions.url, {
-        //     btn_edit: '',
-        //     item_pk: item_pk,
-        //     url: window.location.pathname,
-        //   });
-        //   if (res.data?.redirect) {
-        //     history.push(res.data.redirect);
-        //   }
-        // } catch (err) {
-        //   context.setAlerts({ messages: getErrors(err.response?.data) });
-        // }
-        sessionStorage.setItem("item_pk", item_pk);
-        history.push("/owner");
+        sessionStorage.setItem(props.functions.idKey, item_pk);
+        history.push(props.functions.detailUrl);
     };
 
     const getItemId = (item: TItem | undefined): number => (item ? item.id : -1);
@@ -201,9 +187,11 @@ const ListOfItems = <TItem extends TBaseItem>(props: TListOfItemsProps<TItem>) =
             {loading ? (
                 <Loader />
             ) : (
-                props.functions.getTable(items, getButtons, btnSortClick, sortedBy)
+                <>
+                    {props.functions.getTable(items, getButtons, btnSortClick, sortedBy)}
+                    {getAddButton()}
+                </>
             )}
-            {getAddButton()}
         </div>
     );
 };

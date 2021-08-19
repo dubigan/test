@@ -10,8 +10,10 @@ export const getErrors = (data: Object): TError[] => {
     });
 };
 
-export const redirect = (history: any, redirect: string, dir = "") =>
-    redirect && dir === "back" ? history.back() : history.push(redirect);
+export const redirect = (history: any, redirect: string, dir = "") => {
+    // console.log("utils.redirect", redirect);
+    redirect && (dir === "back" ? history.back() : history.push(redirect));
+};
 
 export const digitsOnly = (e: KeyboardEvent<Element>) => {
     let charCode = e.code;

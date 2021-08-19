@@ -3,18 +3,18 @@ import styled, { css } from "styled-components";
 export const Container = styled.div`
     margin: 0 auto 20px;
     width: 90%;
-    @media (max-width: 992px) {
-        box-sizing: border-box;
-        background: #f2f2f2;
-        // border: 1px solid rgba(255, 255, 255, 0.5);
-        -webkit-filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-        border-radius: 5px;
-        // padding: 20px;
-        span {
-            display: none;
-        }
-    }
+    // @media (max-width: 992px) {
+    //     box-sizing: border-box;
+    //     background: #f2f2f2;
+    //     // border: 1px solid rgba(255, 255, 255, 0.5);
+    //     -webkit-filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    //     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    //     border-radius: 5px;
+    //     // padding: 20px;
+    //     span {
+    //         display: none;
+    //     }
+    // }
 `;
 
 export const TextArea = styled.textarea`
@@ -43,12 +43,12 @@ export const TextArea = styled.textarea`
             }
         }
     }
-    @media (max-width: 992px) {
-        background: #f2f2f2;
-        border: 1px solid #f2f2f2;
-        padding: 20px;
-        height: 63px;
-    }
+    // @media (max-width: 992px) {
+    //     background: #f2f2f2;
+    //     border: 1px solid #f2f2f2;
+    //     padding: 20px;
+    //     height: 63px;
+    // }
 `;
 
 export const Label = styled.label<{ error?: boolean }>`

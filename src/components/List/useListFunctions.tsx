@@ -7,6 +7,8 @@ import { Table } from "../lib/Table";
 const functions: TListFunctions = {
     cars: {
         url: "/api/cars/",
+        detailUrl: "/car",
+        idKey: "car_pk",
         tooltipPlace: "bottom",
         nameOfItem: "Автомобиль",
         addButton: false,
@@ -97,6 +99,8 @@ const functions: TListFunctions = {
 
     owners: {
         url: "/api/owners/",
+        detailUrl: "/owner",
+        idKey: "owner_pk",
         tooltipPlace: "bottom",
         nameOfItem: "Автовладелец",
         addButton: true,

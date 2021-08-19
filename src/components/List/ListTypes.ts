@@ -11,6 +11,8 @@ export type TSortedBy = {
 
 export type TItemFunctions<TItem> = {
     url: string;
+    detailUrl: string;
+    idKey: string;
     tooltipPlace: string;
     nameOfItem: string;
     addButton: boolean;
