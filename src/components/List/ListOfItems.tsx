@@ -1,6 +1,5 @@
 import React, { MouseEvent, useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
-import axios from "axios";
 import { Row } from "../lib/Row/Row";
 import { TooltipContent } from "../lib/Tooltip";
 import { Button } from "../lib/Button/Button";
