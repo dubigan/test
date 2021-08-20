@@ -82,12 +82,14 @@ const ListOfItems = <TItem extends TBaseItem>(props: TListOfItemsProps<TItem>) =
     };
 
     const btnAddClick = async (e: MouseEvent<HTMLElement>) => {
-        try {
-            const res = await api.queryServer(props.functions.url, { btn_add: "" });
-            redirect(history, res.data.redirect);
-        } catch (err) {
-            context.setAlerts({ messages: getErrors(err.response?.data) });
-        }
+        sessionStorage.removeItem(props.functions.idKey);
+        history.push(props.functions.detailUrl);
+        // try {
+        //     const res = await api.queryServer(props.functions.url, { btn_add: "" });
+        //     redirect(history, res.data.redirect);
+        // } catch (err) {
+        //     context.setAlerts({ messages: getErrors(err.response?.data) });
+        // }
     };
 
     const btnEditClick = (e: MouseEvent<HTMLButtonElement>) => {

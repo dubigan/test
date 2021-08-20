@@ -14,8 +14,8 @@ export type TBaseItem = {
     id: number;
 };
 
-export type TCarItem = {
-    id: number;
+export type TCarItem = TBaseItem & {
+    // id: number;
     manufacturer: string;
     model: string;
     production: string;
@@ -25,8 +25,8 @@ export type TCarItem = {
     comment: string;
 };
 
-export type TOwnerItem = {
-    id: number;
+export type TOwnerItem = TBaseItem & {
+    // id: number;
     name: string;
     patronymic: string;
     last_name: string;

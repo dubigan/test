@@ -1,11 +1,11 @@
 import { ChangeEvent, useContext, useState } from "react";
 import { useRouter } from "next/router";
 import { AlertContext } from "../lib/alert/AlertContext";
-import { TDetailOfItemsProps, TDetailUtils } from "./DetailTypes";
+import { TBaseItem, TDetailOfItemsProps, TDetailUtils } from "./DetailTypes";
 import { getErrors, redirect } from "../lib/utils/utils";
 import api from "../../pages/api/api";
 
-export const useDetailOfItem = <TItem>({
+export const useDetailOfItem = <TItem extends TBaseItem>({
     functions,
 }: TDetailOfItemsProps<TItem>): TDetailUtils<TItem> => {
     const context = useContext(AlertContext);
@@ -43,8 +43,10 @@ export const useDetailOfItem = <TItem>({
 
         saveItem: async () => {
             try {
+                const vitem = functions.verifyItem(item);
                 const res = await api.queryServer(functions.url, {
-                    item: functions.verifyItem(item),
+                    [functions.idKey]: vitem.id,
+                    item: vitem,
                 });
                 //console.log("saveItem", res.data);
 
@@ -52,17 +54,18 @@ export const useDetailOfItem = <TItem>({
                     messages: [{ type: "success", message: "Информация сохранена" }],
                 });
                 setItem(getItemFromData(res.data));
-                redirect(history, res.data.redirect, "back");
+                // redirect(history, res.data.redirect, "back");
+                history.back();
             } catch (err) {
                 //console.log('saveItem', err);
 
                 let messages;
-                if (typeof err.response.data == "string") {
+                if (typeof err.response?.data == "string") {
                     console.log("saveItem", err.response.data);
 
                     messages = [err.response.data];
                 } else {
-                    messages = getErrors(err.response.data);
+                    messages = getErrors(err.response?.data);
                 }
                 //console.log('saveItem.context', this.context);
                 context.setAlerts({ messages });
