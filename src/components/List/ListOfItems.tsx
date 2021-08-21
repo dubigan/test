@@ -4,7 +4,7 @@ import { Row } from "../lib/Row/Row";
 import { TooltipContent } from "../lib/Tooltip";
 import { Button } from "../lib/Button/Button";
 import Alerts from "../lib/alert/Alerts";
-import { AlertContext } from "../lib/alert/AlertContext";
+import { useAlerts } from "../lib/alert/AlertContext";
 import Loader from "../Loader/Loader";
 import api from "../../pages/api/api";
 import { getErrors } from "../lib/utils/utils";
@@ -15,7 +15,7 @@ import { TBaseItem } from "../Detail/DetailTypes";
 import { redirect } from "../lib/utils/utils";
 
 const ListOfItems = <TItem extends TBaseItem>(props: TListOfItemsProps<TItem>) => {
-    const context = useContext(AlertContext);
+    const context = useAlerts();
     const [loading, setLoading] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [itemToDelete, setItemToDelete] = useState<TItem | undefined>(undefined);
@@ -175,7 +175,7 @@ const ListOfItems = <TItem extends TBaseItem>(props: TListOfItemsProps<TItem>) =
 
     return (
         <div>
-            <Alerts withAlerts={props.withAlerts} />
+            <Alerts withAlerts={props.withAlerts ?? true} />
             {showDeleteDialog && (
                 <DeleteDialog
                     nameOfItem={props.functions.nameOfItem}

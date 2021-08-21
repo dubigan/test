@@ -34,9 +34,8 @@ const App = () => {
     return (
         <>
             <Header />
-            <div className="container-fluid">
-                <AlertProvider></AlertProvider>
-            </div>
+            {/* <div className="container-fluid">
+            </div> */}
         </>
     );
 };

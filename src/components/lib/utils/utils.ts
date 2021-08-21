@@ -6,6 +6,7 @@ const getKeyValue = <T, K extends keyof T>(obj: T, key: K): T[K] => obj[key];
 export const getErrors = (data: Object): TError[] => {
     if (!data) return [{ type: "error", message: "Unknown error" }];
     return Object.keys(data).map((key: any) => {
+        // console.log("utils.getErrors", getKeyValue(data, key));
         return { type: "error", message: getKeyValue(data, key) };
     });
 };

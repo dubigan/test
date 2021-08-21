@@ -1,28 +1,26 @@
-import React, { useState, useContext } from 'react';
-import { TAlertsContext, TAlertsState, TContextProps } from './AlertTypes';
+import React, { useState, useContext } from "react";
+import { TAlertsContext, TAlertsState, TContextProps } from "./AlertTypes";
 
-export const AlertContext = React.createContext<TAlertsContext>({
-  messages: [],
-  setAlerts: e => e,
+const AlertContext = React.createContext<TAlertsContext>({
+    messages: [],
+    setAlerts: (e) => e,
 });
+// const AlertContext = React.createContext<TAlertsContext>(null);
 
 export const useAlerts = () => {
-  return useContext(AlertContext);
+    return useContext(AlertContext);
 };
 
 export const AlertProvider = ({ children }: TContextProps) => {
-  const [messages, setMessages] = useState<TAlertsState>({
-    messages: [],
-    //show: false,
-  });
-  const setAlerts = (messages: any): any => {
-    // console.log('AlertProvider.setAlerts', messages);
-    setMessages(messages);
-  };
-  //console.log('AlertProvider.alerts', messages);
-  return (
-    <AlertContext.Provider value={{ messages: messages.messages, setAlerts: setAlerts }}>
-      {children}
-    </AlertContext.Provider>
-  );
+    const [alerts, setAlerts] = useState<TAlertsState>({ messages: [] });
+    const setInner = (msgs: any): void => {
+        setAlerts({ messages: msgs });
+        // console.log("AlertProvider.setAlerts.messages", alerts);
+    };
+    //console.log('AlertProvider.alerts', messages);
+    return (
+        <AlertContext.Provider value={{ messages: alerts.messages, setAlerts: setInner }}>
+            {children}
+        </AlertContext.Provider>
+    );
 };
