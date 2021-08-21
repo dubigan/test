@@ -10,7 +10,6 @@ const Owners = (props: TListOfItemsProps<TOwnerItem>) => {
 
     return (
         <>
-            <Header />
             <ListOfItems<TOwnerItem> functions={functions as TItemFunctions<TOwnerItem>} />;
         </>
     );

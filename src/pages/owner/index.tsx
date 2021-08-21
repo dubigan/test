@@ -65,7 +65,6 @@ const OwnerDetail = () => {
 
     return (
         <div>
-            <Header />
             <Alerts />
             <Card>
                 <Card.Title>Автовладелец</Card.Title>
