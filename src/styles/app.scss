@@ -1,107 +1,107 @@
 @import-normalize;
 
-@import 'lib/vars';
-@import 'lib/row';
-@import 'lib/width';
-@import 'lib/forms';
-@import 'lib/buttons';
-@import 'lib/table';
-@import 'lib/card';
-@import 'lib/toggleButtons';
-@import 'lib/alert';
-@import 'lib/modal';
+@import "lib/vars";
+@import "lib/row";
+@import "lib/width";
+@import "lib/forms";
+@import "lib/buttons";
+@import "lib/table";
+@import "lib/card";
+@import "lib/toggleButtons";
+@import "lib/alert";
+@import "lib/modal";
 
 html {
-  font-size: 10px;
+    font-size: 10px;
 }
 
 body {
-  font-family: $font-sans-serif;
-  box-sizing: border-box;
-  font-size: 1.6rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: $dark;
-  text-align: left;
-  background-color: $white;
+    font-family: $font-sans-serif;
+    box-sizing: border-box;
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: $dark;
+    text-align: left;
+    background-color: $white;
 }
 
 *,
 ::after,
 ::before {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 a {
-  color: #007bff;
-  text-decoration: none;
-  background-color: transparent;
-  -webkit-text-decoration-skip: objects;
+    color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
 }
 // table {
 //   background-color: green;
 // }
 
 .container-fluid {
-  width: 100%;
-  padding-right: 1rem;
-  padding-left: 1rem;
-  margin-right: auto;
-  margin-left: auto;
+    width: 100%;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .sorted-row {
-  @include row-nowrap;
-  &__arrow {
-  }
-  &__text {
-    padding-left: 0.5rem;
-  }
+    @include row-nowrap;
+    &__arrow {
+    }
+    &__text {
+        padding-left: 0.5rem;
+    }
 }
 
 .form {
-  &__control {
-    &_car-input,
-    &_owner-input {
-      @include size(6);
+    &__control {
+        &_car-input,
+        &_owner-input {
+            @include size(6);
+        }
     }
-  }
-  &__label {
-    &_car-input,
-    &_owner-input {
-      @include size(4);
+    &__label {
+        &_car-input,
+        &_owner-input {
+            @include size(4);
+        }
+        &_car-comment,
+        &_owner-comment {
+            width: 100%;
+            text-align: left;
+        }
     }
-    &_car-comment,
-    &_owner-comment {
-      width: 100%;
-      text-align: left;
+    &__group {
+        &_car-input,
+        &_owner-input {
+            @include size(5);
+        }
+        &_car-comment,
+        &_owner-comment {
+            @include size(7);
+            justify-content: flex-start;
+        }
     }
-  }
-  &__group {
-    &_car-input,
-    &_owner-input {
-      @include size(5);
-    }
-    &_car-comment,
-    &_owner-comment {
-      @include size(7);
-      justify-content: flex-start;
-    }
-  }
 }
 
 .toggleButtonGroup {
-  &_owner-gender {
-    @include size(6);
-  }
+    &_owner-gender {
+        @include size(6);
+    }
 }
 
 .btn-primary {
-  &_owner-add-car,
-  &_car-save,
-  &_owner-save {
-    @include size(12);
-  }
+    &_owner-add-car,
+    &_car-save,
+    &_owner-save {
+        @include size(12);
+    }
 }
 
 // .react-date-picker__wrapper {
@@ -110,45 +110,49 @@ a {
 // }
 
 .react-date-picker__inputGroup {
-  font: inherit;
-  &__input {
-    //font: inherit;
-    font-family: $font-sans-serif;
-    font-size: 1.8rem;
-    font-weight: 400;
-  }
+    font: inherit;
+    &__input {
+        //font: inherit;
+        font-family: $font-sans-serif;
+        font-size: 1.8rem;
+        font-weight: 400;
+    }
 }
 
 .alert {
-  @include alert;
+    @include alert;
 }
 
 .delete-dialog {
-  @include modal;
+    @include modal;
 }
 
 .form {
-  &__text {
-    &_upload {
-      @include size(4);
+    &__text {
+        &_upload {
+            @include size(4);
+        }
     }
-  }
-  &__label {
-    &_upload {
-      @include size(2);
-      margin-bottom: 0.5rem;
+    &__label {
+        &_upload {
+            @include size(2);
+            margin-bottom: 0.5rem;
+        }
+        &_download {
+            @include size(3);
+        }
     }
-    &_download {
-      @include size(3);
+    &__select {
+        &_download {
+            @include size(3);
+        }
     }
-  }
-  &__select {
-    &_download {
-      @include size(3);
-    }
-  }
 }
 
-@import 'navbar';
-@import 'tooltip';
-@import 'buttons';
+.react-date-picker__wrapper {
+    border: 0 !important;
+}
+
+@import "navbar";
+@import "tooltip";
+@import "buttons";

@@ -21,7 +21,6 @@ import { getErrors, digitsOnly, redirect } from "../../components/lib/utils/util
 import { useListFunctions } from "../../components/List/useListFunctions";
 import { TextField } from "../../components/lib/input/TextField";
 import { TextArea } from "../../components/lib/input/TextArea";
-import Header from "../../components/Header/Header";
 import api from "../api/api";
 import { useRouter } from "next/router";
 import { useAlerts } from "../../components/lib/alert/AlertContext";

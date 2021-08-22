@@ -46,6 +46,7 @@ export const useDetailOfItem = <TItem extends TBaseItem>({
             try {
                 const vitem = functions.verifyItem(item);
                 const res = await api.queryServer(functions.url, {
+                    owner_pk: sessionStorage.get("owner_pk", -1),
                     [functions.idKey]: vitem.id,
                     item: vitem,
                 });

@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const BASE_URL = "https://pskov.herokuapp.com/testforjob/";
+// const BASE_URL = "https://pskov.herokuapp.com/testforjob/";
 // const BASE_URL = 'https://localhost:8002/';
-// const BASE_URL = "http://192.168.2.105:5000/testforjob/";
+const BASE_URL = "http://192.168.2.105:5000/testforjob/";
 
 const instance = axios.create({
     baseURL: BASE_URL,

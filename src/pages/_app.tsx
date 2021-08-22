@@ -1,3 +1,5 @@
+import "react-date-picker/dist/DatePicker.css";
+import "react-calendar/dist/Calendar.css";
 import "../styles/app.scss";
 
 import type { AppProps } from "next/app";

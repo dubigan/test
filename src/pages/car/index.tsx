@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
-// import DatePicker from "react-date-picker";
+import DatePicker from "react-date-picker/dist/entry.nostyle";
 import { useDetailOfItem } from "../../components/Detail/DetailOfItem";
 import Alerts from "../../components/lib/alert/Alerts";
-// import "react-date-picker/dist/DatePicker.css";
-// import "react-calendar/dist/Calendar.css";
-// import "../../components/css/DatePicker.css";
 import Card from "../../components/lib/Card/Card";
 import { Row } from "../../components/lib/Row/Row";
 import { Button } from "../../components/lib/Button/Button";
@@ -80,7 +77,7 @@ const CarDetail = () => {
                                     <Form.Label className="form__label form__label_car-input">
                                         Дата выпуска
                                     </Form.Label>
-                                    {/* <DatePicker
+                                    <DatePicker
                                         className="form__control form__control_car-input"
                                         calendarClassName="border"
                                         format="dd.MM.yyyy"
@@ -91,7 +88,7 @@ const CarDetail = () => {
                                         // showYearDropdown={true}
                                         onChange={changeDate}
                                         value={getDate()}
-                                    /> */}
+                                    />
                                 </Form.Group>
                                 {/* </OverlayTrigger> */}
                                 <Form.Group className="form__group form__group_horiz">
