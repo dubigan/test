@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FC } from 'react';
-import * as Styled from './TextField.elements';
+import * as Styled from './TextField.styled';
 
 type TProps = {
   select?: boolean;
