@@ -1,10 +1,10 @@
-import { ChangeEvent, useContext, useState } from "react";
-import { useRouter } from "next/router";
+import { ChangeEvent, useContext, useState } from 'react';
+import { useRouter } from 'next/router';
 // import { AlertContext } from "../lib/alert/AlertContext";
-import { TBaseItem, TDetailOfItemsProps, TDetailUtils } from "./DetailTypes";
-import { getErrors, redirect } from "../lib/utils/utils";
-import api from "../../pages/api/api";
-import { useAlerts } from "../lib/alert/AlertContext";
+import { TBaseItem, TDetailOfItemsProps, TDetailUtils } from './DetailTypes';
+import { getErrors, redirect } from '../lib/utils/utils';
+import api from '../../pages/api/api';
+import { useAlerts } from '../lib/alert/AlertContext';
 
 export const useDetailOfItem = <TItem extends TBaseItem>({
     functions,
@@ -28,16 +28,16 @@ export const useDetailOfItem = <TItem extends TBaseItem>({
     return {
         getItem: async () => {
             const item_pk = sessionStorage.getItem(functions.idKey) ?? -1;
-            console.log("getItem.item_pk: ", item_pk);
+            console.log('getItem.item_pk: ', item_pk);
             try {
                 const res = await api.queryServer(functions.url, { [functions.idKey]: item_pk });
                 // console.log("DetailOfItem.getItem.data", res.data);
                 redirect(history, res.data.redirect);
 
                 const data = getItemFromData(res.data);
-                console.log("DetailOfItem.getItem.data", data);
+                console.log('DetailOfItem.getItem.data', data);
                 setItem(data);
-            } catch (err) {
+            } catch (err: any) {
                 context.setAlerts({ messages: getErrors(err.response?.data) });
             }
         },
@@ -46,24 +46,24 @@ export const useDetailOfItem = <TItem extends TBaseItem>({
             try {
                 const vitem = functions.verifyItem(item);
                 const res = await api.queryServer(functions.url, {
-                    owner_pk: sessionStorage.get("owner_pk", -1),
+                    owner_pk: sessionStorage.get('owner_pk', -1),
                     [functions.idKey]: vitem.id,
                     item: vitem,
                 });
                 //console.log("saveItem", res.data);
 
                 context.setAlerts({
-                    messages: [{ type: "success", message: "Информация сохранена" }],
+                    messages: [{ type: 'success', message: 'Информация сохранена' }],
                 });
                 setItem(getItemFromData(res.data));
                 // redirect(history, res.data.redirect, "back");
                 history.back();
-            } catch (err) {
+            } catch (err: any) {
                 // console.log("saveItem", err);
 
                 let messages;
-                if (typeof err.response?.data == "string") {
-                    console.log("saveItem", err.response.data);
+                if (typeof err.response?.data == 'string') {
+                    console.log('saveItem', err.response.data);
 
                     messages = [err.response.data];
                 } else {

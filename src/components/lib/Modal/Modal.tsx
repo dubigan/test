@@ -18,7 +18,7 @@ const ModalHeader = (props: TModalHeaderProps) => {
   // });
 
   return (
-    <div ref={ref} className={baseClass + '__header'} id={props.id}>
+    <div ref={ref} className={`${baseClass}__header`} id={props.id}>
       {props.children}
     </div>
   );
@@ -27,7 +27,7 @@ const ModalHeader = (props: TModalHeaderProps) => {
 const ModalTitle = (props: TModalPartsProps) => {
   //useEffect(() => console.log('Modal.Title', baseClass));
   return (
-    <div className={baseClass + '__title'} id={props.id}>
+    <div className={`${baseClass}__title`} id={props.id}>
       <h4>{props.children}</h4>
     </div>
   );
@@ -36,7 +36,7 @@ const ModalTitle = (props: TModalPartsProps) => {
 const ModalBody = (props: TModalPartsProps) => {
   //useEffect(() => console.log('Modal.Body', baseClass));
   return (
-    <div className={baseClass + '__body'} id={props.id}>
+    <div className={`${baseClass}__body`} id={props.id}>
       {props.children}
     </div>
   );
@@ -45,7 +45,7 @@ const ModalBody = (props: TModalPartsProps) => {
 const ModalFooter = (props: TModalPartsProps) => {
   //useEffect(() => console.log('Modal.Footer', baseClass));
   return (
-    <div className={baseClass + '__footer'} id={props.id}>
+    <div className={`${baseClass}__footer`} id={props.id}>
       {props.children}
     </div>
   );
@@ -56,7 +56,7 @@ type TModalProps = {
   id?: string;
   baseClassName: string;
   children?: any;
-  onHide: EventHandlerNonNull;
+  onHide: any;
 };
 
 type TModalAddOns = {
@@ -73,32 +73,30 @@ const Modal = (props: TModalProps) => {
   useEffect(setBaseClass, []);
   const changeShowStatus = () => {
     const $body = document.querySelector('body')!;
-    const $modal = document.querySelector('.' + props.baseClassName)! as HTMLElement;
-    const $modalBackdrop = document.querySelector(
-      '.' + props.baseClassName + '__backdrop'
-    )! as HTMLElement;
-    const $dialog = document.querySelector('.' + props.baseClassName + '__dialog') as HTMLElement;
+    const $modal = document.querySelector(`.${props.baseClassName}`)! as HTMLElement;
+    const $modalBackdrop = document.querySelector(`.${props.baseClassName}__backdrop`)! as HTMLElement;
+    const $dialog = document.querySelector(`.${props.baseClassName}__dialog`) as HTMLElement;
     //console.log('Modal.modal', $modal);
     if (props.show) {
       $body.classList.add('body-modal-open');
-      $modalBackdrop.classList.add(props.baseClassName + '__backdrop_show');
-      $modal.classList.add(props.baseClassName + '_show');
-      $dialog.classList.add(props.baseClassName + '__dialog_show');
+      $modalBackdrop.classList.add(`${props.baseClassName}__backdrop_show`);
+      $modal.classList.add(`${props.baseClassName}_show`);
+      $dialog.classList.add(`${props.baseClassName}__dialog_show`);
     } else {
       $body.classList.remove('body-modal-open');
-      $modalBackdrop.classList.remove(props.baseClassName + '__backdrop_show');
-      $modal.classList.remove(props.baseClassName + '_show');
-      $dialog.classList.remove(props.baseClassName + '__dialog_show');
+      $modalBackdrop.classList.remove(`${props.baseClassName}__backdrop_show`);
+      $modal.classList.remove(`${props.baseClassName}_show`);
+      $dialog.classList.remove(`${props.baseClassName}__dialog_show`);
     }
   };
   useEffect(changeShowStatus, [props.show]);
 
   return (
     <>
-      <div id={props.id} className={props.baseClassName + '__backdrop'}></div>
+      <div id={props.id} className={`${props.baseClassName}__backdrop`}></div>
       <div id={props.id} className={props.baseClassName}>
-        <div className={props.baseClassName + '__dialog'}>
-          <div id={props.id} className={props.baseClassName + '__children'}>
+        <div className={`${props.baseClassName}__dialog`}>
+          <div id={props.id} className={`${props.baseClassName}__children`}>
             {props.children}
           </div>
         </div>

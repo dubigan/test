@@ -1,9 +1,4 @@
-import React, {
-  ChangeEventHandler,
-  FormEventHandler,
-  KeyboardEventHandler,
-  MouseEventHandler,
-} from 'react';
+import React, { ChangeEventHandler, FormEventHandler, KeyboardEventHandler, MouseEventHandler } from 'react';
 
 type TFormProps = {
   children?: React.ReactNode;
@@ -44,7 +39,7 @@ let baseClass: string | undefined = 'form';
 
 const getClassName = (className: string = '', auxClassName: string = '', suffix: string = '') => {
   if (className) return className;
-  return baseClass + suffix + (auxClassName ? ' ' + auxClassName : '');
+  return `${baseClass}${suffix} ${auxClassName ?? ''}`;
 };
 
 const FormLabel = ({ children, className, auxClassName }: TFormLabelProps) => {
@@ -57,10 +52,7 @@ const FormGroup = ({ children, className, auxClassName }: TFormProps) => {
 
 const FormControlSelect = (props: TFormControlProps) => {
   return (
-    <select
-      className={getClassName(props.className, props.auxClassName, '__select')}
-      onChange={props.onChange}
-    >
+    <select className={getClassName(props.className, props.auxClassName, '__select')} onChange={props.onChange}>
       {props.children}
     </select>
   );

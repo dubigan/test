@@ -9,11 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@types/react-router": "^5.1.16",
-    "@types/react-router-dom": "^5.1.8",
     "@types/styled-components": "^5.1.12",
     "axios": "^0.21.1",
     "dotenv": "^10.0.0",
+    "mobx": "^6.3.12",
+    "mobx-react-lite": "^3.2.3",
     "moment": "^2.29.1",
     "next": "11.1.0",
     "react": "17.0.2",
