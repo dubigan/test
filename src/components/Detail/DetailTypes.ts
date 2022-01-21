@@ -13,15 +13,17 @@ export enum E_GENDER {
 export enum E_BASE_ITEM {
     ID = 'id',
     COMMENT = 'comment',
+    // API_KEY = 'api_key',
 }
 
 export enum E_CAR_ITEM {
-    MANUFACTURER = 'manufacturer',
     MODEL = 'model',
+    MANUFACTURER = 'manufacturer',
     PRODUCTION = 'production',
     COLOR = 'color',
     POWER = 'power',
     MILEAGE = 'mileage',
+    OWNER = 'owner_pk',
     // COMMENT = 'comment',
 }
 
@@ -36,19 +38,43 @@ export enum E_OWNER_ITEM {
 
 export type TGender = E_GENDER;
 
+export enum E_ITEM_KEY {
+    CAR = 'car_pk',
+    OWNER = 'owner_pk',
+}
+
+// export type TItemKey = E_ITEM_KEY;
+
 export type TBaseItem = {
     [E_BASE_ITEM.ID]: number;
     [E_BASE_ITEM.COMMENT]?: string;
+    // [E_BASE_ITEM.API_KEY]: TItemKey;
 };
 
+// export type TBaseItem = {
+//     id: number;
+//     comment?: string;
+//     // [E_BASE_ITEM.API_KEY]: TItemKey;
+// };
+
 export type TCarItem = TBaseItem & {
-    [E_CAR_ITEM.MANUFACTURER]: string;
     [E_CAR_ITEM.MODEL]: string;
+    [E_CAR_ITEM.MANUFACTURER]: string;
     [E_CAR_ITEM.PRODUCTION]: string;
     [E_CAR_ITEM.COLOR]: string;
     [E_CAR_ITEM.POWER]: number | undefined;
     [E_CAR_ITEM.MILEAGE]: number | undefined;
+    [E_CAR_ITEM.OWNER]: number;
 };
+
+// export type TCarItem = TBaseItem & {
+//     model: string;
+//     manufacturer: string;
+//     prodaction: string;
+//     color: string;
+//     power: number | undefined;
+//     mileage: number | undefined;
+// };
 
 export type TOwnerItem = TBaseItem & {
     [E_OWNER_ITEM.NAME]: string;
@@ -59,19 +85,21 @@ export type TOwnerItem = TBaseItem & {
     [E_OWNER_ITEM.CARS]: TCarItem[];
 };
 
-export type TDetailItemFunctions<TItem> = {
+export type TItem = TCarItem | TOwnerItem;
+
+export type TItemInfo<T> = {
     url: string;
     // detailUrl: string;
     idKey: string;
     tooltipPlace: string;
     getNewItemId: () => number;
-    getNewItem: () => TItem;
-    verifyItem: (item: TItem) => TItem;
+    getNewItem: () => T;
+    verifyItem: (item: T) => T | null;
 };
 
-export type TDetailFunctions = {
-    [E_DETAIL.CAR]: TDetailItemFunctions<TCarItem>;
-    [E_DETAIL.OWNER]: TDetailItemFunctions<TOwnerItem>;
+export type TItemsInfo = {
+    [E_DETAIL.CAR]: TItemInfo<TCarItem>;
+    [E_DETAIL.OWNER]: TItemInfo<TOwnerItem>;
 };
 
 export type TItems = {
@@ -79,20 +107,20 @@ export type TItems = {
     [E_DETAIL.OWNER]: TOwnerItem;
 };
 
-export type TDetailType = E_DETAIL;
+export type TItemType = E_DETAIL;
 
-export type TDetailOfItemsProps<TItem> = {
+export type TItemsProps<T> = {
     // owner?: number;
     // withAlerts?: boolean;
-    functions: TDetailItemFunctions<TItem>;
+    itemInfo: TItemInfo<T>;
 };
 
-export type TSetItem<TItem> = (item: TItem) => void;
+export type TSetItem<T> = (item: T) => void;
 
-export type TDetailUtils<TItem> = {
-    item: TItem;
+export type TDetailUtils<T> = {
+    item: T;
     getItem: () => void;
     saveItem: () => void;
     changeItem: (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void;
-    setItem: TSetItem<TItem>;
+    setItem: TSetItem<T>;
 };

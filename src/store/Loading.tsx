@@ -1,9 +1,9 @@
-import { makeAutoObservable, runInAction } from 'mobx';
+import { makeAutoObservable, observable, runInAction } from 'mobx';
 
 class Loading {
     _loading = false;
     constructor() {
-        makeAutoObservable(this, {}, { autoBind: true });
+        makeAutoObservable(this, { _loading: observable }, { autoBind: true });
     }
 
     get loading() {
@@ -12,11 +12,12 @@ class Loading {
 
     set loading(loading: boolean) {
         runInAction(() => {
+            console.log('Loading', this.loading);
+
             this._loading = loading;
-            // console.log('Loading', this.loading);
             // this._list = res;
         });
     }
 }
 
-export default new Loading();
+export default Loading;

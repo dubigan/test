@@ -13,39 +13,38 @@ import DeleteDialog from '../DeleteDialog/DeleteDialog';
 import { TListOfItemsProps } from './ListTypes';
 import { TBaseItem } from '../Detail/DetailTypes';
 import { observer } from 'mobx-react-lite';
-import Loading from '../../store/Loading';
+// import Loading from '../../store/Loading';
 import useListStore from '../../store/useListStore';
+import { CAR_URL_API } from '../Detail/useItemInfo';
+import useLoading from '../../store/useLoading';
 
 const ListOfItems = observer(<TItem extends TBaseItem>(props: TListOfItemsProps<TItem>) => {
     const context = useAlerts();
     const listStore = useListStore<TItem>();
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [itemToDelete, setItemToDelete] = useState<TItem | undefined>(undefined);
-    const [sortedBy, setSortedBy] = useState<TSortedBy>(props.functions.getDefaultSortedBy());
+    const [sortedBy, setSortedBy] = useState<TSortedBy>(props.functions!.getDefaultSortedBy());
+    // const [loading, setLoading] = useState(false);
     const history = useRouter();
+    const loading = useLoading();
     console.log('ListOfItems props', props);
 
-    const getItems = useCallback(async () => {
-        Loading.loading = true;
-        //console.log('getItems owner', this.props.owner);
-        try {
-            await listStore.loadItems({ url: props.functions.url, sortedBy, owner: props.owner ?? -1 });
-        } catch (e: any) {
-            context.setAlerts({ messages: getErrors(e.response?.data) });
-        } finally {
-            Loading.loading = false;
-        }
-    }, [listStore]);
-
     useEffect(() => {
-        getItems();
+        const loadItems = async () => {
+            loading.loading = true;
+            //console.log('getItems owner', this.props.owner);
+            try {
+                await listStore.loadItems({ url: props.functions!.url, sortedBy, owner: props.owner ?? -1 });
+            } catch (e: any) {
+                context.setAlerts({ messages: getErrors(e.response?.data) });
+            } finally {
+                // setLoading(false);
+                loading.loading = false;
+            }
+        };
+        loadItems();
         // console.log('ListOfItems.getItems items', itemsStore.items);
-    }, [listStore]);
-
-    // useEffect(() => {
-    //     getItems();
-    //     console.log('ListOfItems.getItems items', itemsStore.items);
-    // }, [sortedBy, props.owner]);
+    }, [listStore, sortedBy, props.owner]);
 
     const getItemById = (id: number) => {
         return listStore.list.filter((item: any) => +item.id === +id)[0];
@@ -78,8 +77,8 @@ const ListOfItems = observer(<TItem extends TBaseItem>(props: TListOfItemsProps<
     };
 
     const btnAddClick = async (e: MouseEvent<HTMLElement>) => {
-        sessionStorage.removeItem(props.functions.idKey);
-        history.push(props.functions.detailUrl);
+        sessionStorage.removeItem(props.functions!.idKey);
+        history.push(props.functions!.detailUrl);
         // try {
         //     const res = await api.queryServer(props.functions.url, { btn_add: "" });
         //     redirect(history, res.data.redirect);
@@ -91,8 +90,8 @@ const ListOfItems = observer(<TItem extends TBaseItem>(props: TListOfItemsProps<
     const btnEditClick = (e: MouseEvent<HTMLButtonElement>) => {
         const item_pk = (e.target as HTMLButtonElement).value;
 
-        sessionStorage.setItem(props.functions.idKey, item_pk);
-        history.push(props.functions.detailUrl);
+        sessionStorage.setItem(props.functions!.idKey, item_pk);
+        history.push(props.functions!.detailUrl);
     };
 
     const getItemId = (item: TItem | undefined): number => (item ? item.id : -1);
@@ -101,9 +100,10 @@ const ListOfItems = observer(<TItem extends TBaseItem>(props: TListOfItemsProps<
         setShowDeleteDialog(false);
 
         if (confirm === 'true') {
-            Loading.loading = true;
+            // setLoading(true);
+            loading.loading = true;
             try {
-                const res = await api.queryServer(props.functions.url, {
+                const res = await api.queryServer(props.functions!.url, {
                     sorted_by: sortedBy,
                     btn_del: '',
                     item_pk: getItemId(itemToDelete),
@@ -114,14 +114,15 @@ const ListOfItems = observer(<TItem extends TBaseItem>(props: TListOfItemsProps<
                     messages: [
                         {
                             type: 'success',
-                            message: `${props.functions.nameOfItem} успешно удален`,
+                            message: `${props.functions!.nameOfItem} успешно удален`,
                         },
                     ],
                 });
             } catch (e: any) {
                 context.setAlerts({ messages: getErrors(e.response.data) });
             } finally {
-                Loading.loading = false;
+                // setLoading(false);
+                loading.loading = false;
             }
         }
     };
@@ -142,7 +143,7 @@ const ListOfItems = observer(<TItem extends TBaseItem>(props: TListOfItemsProps<
     };
 
     const getAddButton = () => {
-        if (props.functions.addButton)
+        if (props.functions!.addButton)
             return (
                 <Button variant="primary" className="btn-primary btn-primary_add tooltip" onClick={btnAddClick}>
                     <TooltipContent>Добавление&nbsp;нового&nbsp;автовладельца</TooltipContent>+
@@ -156,18 +157,18 @@ const ListOfItems = observer(<TItem extends TBaseItem>(props: TListOfItemsProps<
             <Alerts withAlerts={props.withAlerts ?? true} />
             {showDeleteDialog && (
                 <DeleteDialog
-                    nameOfItem={props.functions.nameOfItem}
+                    nameOfItem={props.functions!.nameOfItem}
                     itemToDelete={itemToDelete!}
                     deleteItem={deleteItem}
-                    itemInfo={props.functions.itemInfo}
+                    itemInfo={props.functions!.itemInfo}
                     onClose={() => setShowDeleteDialog(false)}
                 />
             )}
-            {Loading.loading ? (
+            {loading.loading ? (
                 <Loader />
             ) : (
                 <>
-                    {props.functions.getTable(listStore.list, getButtons, btnSortClick, sortedBy)}
+                    {props.functions!.getTable(listStore.list, getButtons, btnSortClick, sortedBy)}
                     {getAddButton()}
                 </>
             )}

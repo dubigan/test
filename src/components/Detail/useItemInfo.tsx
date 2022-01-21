@@ -1,18 +1,20 @@
 import {
-    TDetailType,
     TCarItem,
     TOwnerItem,
-    TDetailFunctions,
-    TDetailItemFunctions,
+    TItemsInfo,
     E_GENDER,
     E_DETAIL,
     E_BASE_ITEM,
     E_CAR_ITEM,
     E_OWNER_ITEM,
+    TBaseItem,
+    E_ITEM_KEY,
+    TItemType,
 } from './DetailTypes';
 
+export const EMPTY_CAR_ID = -1;
 export const EMPTY_CAR: TCarItem = {
-    [E_BASE_ITEM.ID]: -1,
+    [E_BASE_ITEM.ID]: EMPTY_CAR_ID,
     [E_CAR_ITEM.MANUFACTURER]: '',
     [E_CAR_ITEM.MODEL]: '',
     [E_CAR_ITEM.PRODUCTION]: new Date().toLocaleDateString('ru'),
@@ -20,6 +22,8 @@ export const EMPTY_CAR: TCarItem = {
     [E_CAR_ITEM.POWER]: undefined,
     [E_CAR_ITEM.MILEAGE]: undefined,
     [E_BASE_ITEM.COMMENT]: '',
+    [E_CAR_ITEM.OWNER]: -1,
+    // [E_BASE_ITEM.KEY]: E_ITEM_KEY.CAR,
 };
 
 export const EMPTY_OWNER_ID = -10;
@@ -34,32 +38,36 @@ export const EMPTY_OWNER: TOwnerItem = {
     [E_OWNER_ITEM.GENDER]: E_GENDER.FEMALE,
     [E_OWNER_ITEM.AGE]: undefined,
     [E_BASE_ITEM.COMMENT]: '',
+    // [E_BASE_ITEM.KEY]: E_ITEM_KEY.OWNER,
 };
 
-const functions: TDetailFunctions = {
+export const CAR_URL_API = '/api/car/';
+export const CAR_API_KEY = 'car_pk';
+export const OWNER_URL_API = '/api/owner/';
+export const OWNER_API_KEY = 'owner_pk';
+
+const functions: TItemsInfo = {
     [E_DETAIL.CAR]: {
-        url: '/api/car/',
+        url: CAR_URL_API,
         // detailUrl: "/car",
-        idKey: 'car_pk',
+        idKey: CAR_API_KEY,
         tooltipPlace: 'bottom',
 
-        getNewItemId: (): number => -1,
+        getNewItemId: (): number => EMPTY_CAR_ID,
         getNewItem: () => {
-            const item: TCarItem = EMPTY_CAR;
-            //console.log('getNewItem', item);
-
-            return item;
+            return EMPTY_CAR;
         },
         verifyItem: (item: TCarItem) => {
+            if (item.id < 0) return null;
             item.power = item.power ?? 0;
             item.mileage = item.mileage ?? 0;
             return item;
         },
     },
     [E_DETAIL.OWNER]: {
-        url: '/api/owner/',
+        url: OWNER_URL_API,
         // detailUrl: "/owner",
-        idKey: 'owner_pk',
+        idKey: OWNER_API_KEY,
         tooltipPlace: 'bottom',
 
         getNewItemId: (): number => EMPTY_OWNER_ID,
@@ -73,6 +81,8 @@ const functions: TDetailFunctions = {
     },
 };
 
-export const useDetailFunctions = (detailType: TDetailType) => {
+const useItemInfo = (detailType: TItemType) => {
     return functions[detailType];
 };
+
+export default useItemInfo;

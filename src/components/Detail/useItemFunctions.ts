@@ -1,24 +1,22 @@
 import { ChangeEvent, useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 // import { AlertContext } from "../lib/alert/AlertContext";
-import { TBaseItem, TDetailOfItemsProps, TDetailUtils } from './DetailTypes';
+import { TBaseItem, TItemsProps, TDetailUtils } from './DetailTypes';
 import { getErrors, redirect } from '../lib/utils/utils';
 import api from '../../pages/api/api';
 import { useAlerts } from '../lib/alert/AlertContext';
 
-export const useDetailOfItem = <TItem extends TBaseItem>({
-    functions,
-}: TDetailOfItemsProps<TItem>): TDetailUtils<TItem> => {
+export const useItemFunctions = <T extends TBaseItem>({ itemInfo }: TItemsProps<T>): TDetailUtils<T> => {
     const context = useAlerts();
     const history = useRouter();
-    const [item, setItem] = useState<TItem>(functions.getNewItem() as TItem);
+    const [item, setItem] = useState<T>(itemInfo.getNewItem() as T);
 
-    const getItemFromData = (data: any): TItem => {
+    const getItemFromData = (data: any): T => {
         //console.log('getItemFromData', data);
-        return data.id ? (data as TItem) : functions.getNewItem();
+        return data.id ? (data as T) : itemInfo.getNewItem();
     };
 
-    const getChangedItem = (item: TItem, name: string, value: string) => {
+    const getChangedItem = (item: T, name: string, value: string) => {
         return {
             ...item,
             [name]: value,
@@ -27,10 +25,10 @@ export const useDetailOfItem = <TItem extends TBaseItem>({
 
     return {
         getItem: async () => {
-            const item_pk = sessionStorage.getItem(functions.idKey) ?? -1;
+            const item_pk = sessionStorage.getItem(itemInfo.idKey) ?? -1;
             console.log('getItem.item_pk: ', item_pk);
             try {
-                const res = await api.queryServer(functions.url, { [functions.idKey]: item_pk });
+                const res = await api.queryServer(itemInfo.url, { [itemInfo.idKey]: item_pk });
                 // console.log("DetailOfItem.getItem.data", res.data);
                 redirect(history, res.data.redirect);
 
@@ -44,10 +42,10 @@ export const useDetailOfItem = <TItem extends TBaseItem>({
 
         saveItem: async () => {
             try {
-                const vitem = functions.verifyItem(item);
-                const res = await api.queryServer(functions.url, {
+                const vitem = itemInfo.verifyItem(item);
+                const res = await api.queryServer(itemInfo.url, {
                     owner_pk: sessionStorage.get('owner_pk', -1),
-                    [functions.idKey]: vitem.id,
+                    [itemInfo.idKey]: vitem?.id,
                     item: vitem,
                 });
                 //console.log("saveItem", res.data);

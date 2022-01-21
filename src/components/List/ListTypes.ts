@@ -37,7 +37,7 @@ export type TListFunctions = {
 export type TListOfItemsProps<TItem> = {
     owner?: number;
     withAlerts?: boolean;
-    functions: TItemFunctions<TItem>;
+    functions?: TItemFunctions<TItem>;
 };
 
 // export type TListItems<TItem> = Array<TItem>;
