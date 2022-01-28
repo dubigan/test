@@ -24,3 +24,5 @@ export const digitsOnly = (e: KeyboardEvent<Element>) => {
         e.preventDefault();
     }
 };
+
+export const getKey = () => Math.ceil(Math.random() * 1000000);

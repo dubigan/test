@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import DatePicker from 'react-date-picker/dist/entry.nostyle';
 import { useItemFunctions } from '../../components/Detail/useItemFunctions';
 import Alerts from '../../components/lib/alert/Alerts';
@@ -7,21 +7,16 @@ import { Row } from '../../components/lib/Row/Row';
 import { Button } from '../../components/lib/Button/Button';
 import Form from '../../components/lib/Form/Form';
 import { TooltipContent } from '../../components/lib/Tooltip';
-import { E_CAR_ITEM, E_DETAIL, TCarItem, TItemInfo, TItemsProps } from '../../components/Detail/DetailTypes';
-import useItemInfo from '../../components/Detail/useItemInfo';
+import {E_CAR_ITEM, E_DETAIL, TCarItem, TItemInfo, TItemsProps, TOwnerItem} from '../../components/Detail/DetailTypes';
 import { digitsOnly } from '../../components/lib/utils/utils';
 import { observer } from 'mobx-react-lite';
-import useItemStore from '../../store/useItemStore';
 
 const CarDetail = observer(() => {
-    // const itemInfo = useItemInfo(E_DETAIL.CAR);
+    const {loadItem, saveItem, changeItem, changeItemData, item} = useItemFunctions<TCarItem>(E_DETAIL.CAR)
 
-    // const detailUtils = useItemFunctions<TCarItem>({ itemInfo } as TItemsProps<TCarItem>);
-    const itemStore = useItemStore<TCarItem>(E_DETAIL.CAR);
-    const { item, loadItem, saveItem, changeItemData } = itemStore;
-
-    const changeItem = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>): void =>
-        changeItemData(e.target.name, e.target.value);
+    const saveItemWithBack = () => {
+        return () => saveItem(true);
+    }
 
     const changeDate = (date: Date | Date[]) => {
         //console.log("changeDate", date.toLocaleDateString("ru"));
@@ -40,7 +35,7 @@ const CarDetail = observer(() => {
 
     useEffect(() => {
         loadItem();
-    }, [itemStore]);
+    }, []);
 
     return (
         <div>
@@ -141,7 +136,7 @@ const CarDetail = observer(() => {
                         </div>
                     </Row>
                     <hr />
-                    <Button className="btn-primary btn-primary_car-save tooltip" onClick={saveItem}>
+                    <Button className="btn-primary btn-primary_car-save tooltip" onClick={saveItemWithBack()}>
                         <TooltipContent>Сохранить информацию об автомобиле</TooltipContent>
                         Сохранить
                     </Button>

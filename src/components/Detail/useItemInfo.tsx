@@ -58,7 +58,7 @@ const functions: TItemsInfo = {
             return EMPTY_CAR;
         },
         verifyItem: (item: TCarItem) => {
-            if (item.id < 0) return null;
+            // if (item.id < 0) return null;
             item.power = item.power ?? 0;
             item.mileage = item.mileage ?? 0;
             return item;

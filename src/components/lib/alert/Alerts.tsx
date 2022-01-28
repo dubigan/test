@@ -7,15 +7,18 @@ const Alerts = ({ timeout = 5000, withAlerts = true }: TAlertsProps) => {
     const [visible, setVisible] = useState(false);
     const alerts = useAlerts();
 
+    let timerId : ReturnType<typeof setTimeout>;
+
     useEffect(() => {
-        console.log("Alerts.messages", alerts.messages);
+    // console.log("Alerts.messages", alerts.messages);
         if (alerts.messages && alerts.messages.length > 0) {
             setVisible(true);
-            global.setTimeout(() => {
+            timerId = setTimeout(() => {
                 setVisible(false);
                 alerts.setAlerts([]);
             }, timeout);
         }
+        return () => clearTimeout(timerId)
     }, [alerts.messages]);
 
     return (

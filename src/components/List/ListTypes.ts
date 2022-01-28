@@ -48,4 +48,10 @@ export type TLoadItemsProps = {
     owner?: number;
 };
 
+export type TDeleteItemProps = {
+    url: string;
+    item_pk : number;
+    owner_pk: number;
+}
+
 export type TListType = E_LIST;

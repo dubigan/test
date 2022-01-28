@@ -12,8 +12,7 @@ class Loading {
 
     set loading(loading: boolean) {
         runInAction(() => {
-            console.log('Loading', this.loading);
-
+            // console.log('Loading', this.loading);
             this._loading = loading;
             // this._list = res;
         });

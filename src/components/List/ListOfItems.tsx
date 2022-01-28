@@ -27,7 +27,7 @@ const ListOfItems = observer(<TItem extends TBaseItem>(props: TListOfItemsProps<
     // const [loading, setLoading] = useState(false);
     const history = useRouter();
     const loading = useLoading();
-    console.log('ListOfItems props', props);
+    // console.log('ListOfItems props', props);
 
     useEffect(() => {
         const loadItems = async () => {
@@ -36,7 +36,7 @@ const ListOfItems = observer(<TItem extends TBaseItem>(props: TListOfItemsProps<
             try {
                 await listStore.loadItems({ url: props.functions!.url, sortedBy, owner: props.owner ?? -1 });
             } catch (e: any) {
-                context.setAlerts({ messages: getErrors(e.response?.data) });
+                context.setAlerts(e);
             } finally {
                 // setLoading(false);
                 loading.loading = false;
@@ -103,23 +103,19 @@ const ListOfItems = observer(<TItem extends TBaseItem>(props: TListOfItemsProps<
             // setLoading(true);
             loading.loading = true;
             try {
-                const res = await api.queryServer(props.functions!.url, {
-                    sorted_by: sortedBy,
-                    btn_del: '',
+                const res = await listStore.deleteItem({
+                    url: props.functions!.url,
                     item_pk: getItemId(itemToDelete),
-                    owner: props.owner ?? -1,
+                    owner_pk: props.owner ?? -1,
                 });
                 // setItems(res.data);
                 context.setAlerts({
-                    messages: [
-                        {
-                            type: 'success',
-                            message: `${props.functions!.nameOfItem} успешно удален`,
-                        },
-                    ],
-                });
+                        type: 'success',
+                        message: `${props.functions!.nameOfItem} успешно удален`,
+                    }
+                );
             } catch (e: any) {
-                context.setAlerts({ messages: getErrors(e.response.data) });
+                context.setAlerts(e);
             } finally {
                 // setLoading(false);
                 loading.loading = false;

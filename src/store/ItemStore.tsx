@@ -1,7 +1,7 @@
-import { makeAutoObservable, runInAction } from 'mobx';
+import { flow, makeAutoObservable, makeObservable, observable, runInAction } from 'mobx';
 import {
     E_BASE_ITEM,
-    E_DETAIL,
+    E_DETAIL, E_ITEM_KEY,
     TBaseItem,
     TCarItem,
     TItem,
@@ -12,45 +12,55 @@ import {
 } from '../components/Detail/DetailTypes';
 import itemInfo from '../components/Detail/useItemInfo';
 import api from '../pages/api/api';
+import { onBecomeObserved } from 'mobx/src/api/become-observed';
 
 class ItemStore<T extends TBaseItem> {
-    _item: T;
-    _itemInfo: TItemInfo<T>;
+    public item: T;
+    private _itemInfo: TItemInfo<T>;
     constructor(itemType: TItemType) {
         this._itemInfo = itemInfo(itemType) as unknown as TItemInfo<T>;
-        this._item = this._itemInfo.getNewItem();
+        this.item = this._itemInfo.getNewItem();
         makeAutoObservable(this, {}, { autoBind: true });
+        // makeObservable(
+        //     this,
+        //     {
+        //         item: observable,
+        //         _itemInfo: observable,
+        //         loadItem: flow.bound,
+        //     },
+        //     { autoBind: true },
+        // );
+        // onBecomeObserved(this, 'item', this.loadItem.bind(this));
     }
 
-    get item() {
-        return this._item;
-    }
+    *loadItem() {
+        const item_pk = sessionStorage.getItem(this._itemInfo.idKey) || -1;
 
-    async loadItem() {
-        const item_pk = sessionStorage.getItem(this._itemInfo.idKey);
-
-        const res = await api.queryServer(this._itemInfo.url, { [this._itemInfo.idKey]: item_pk });
-        console.log('ItemStore.loadItem', res.data);
+        // @ts-ignore
+        const res = yield api.queryServer(this._itemInfo.url, { [this._itemInfo.idKey]: item_pk });
+        // console.log('ItemStore.loadItem', res.data);
         runInAction(() => {
-            this._item = this.getItemFromData(res.data);
+            this.item = this.getItemFromData(res.data);
         });
     }
     async saveItem() {
-        const verifiedItem = this._itemInfo.verifyItem(this._item);
-        const owner_pk = sessionStorage.getItem('owner_pk') ?? -1;
+        const verifiedItem = this._itemInfo.verifyItem(this.item);
+        const owner_pk = sessionStorage.getItem(E_ITEM_KEY.OWNER) ?? -1;
         if (!verifiedItem) return;
+        // console.log('ItemStore.saveItem', verifiedItem);
         const res = await api.queryServer(this._itemInfo.url, {
             item: verifiedItem,
             owner_pk,
             [this._itemInfo.idKey]: verifiedItem.id,
         });
         runInAction(() => {
-            this._item = this.getItemFromData(res.data);
+            this.item = this.getItemFromData(res.data);
         });
     }
+
     changeItemData<K extends keyof T>(name: string, value: any) {
         runInAction(() => {
-            if (this._item && name in this._item) this._item[name as K] = value;
+            if (this.item && name in this.item) this.item[name as K] = value;
         });
     }
     getItemFromData = (data: any): T => {

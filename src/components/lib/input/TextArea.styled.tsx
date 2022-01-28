@@ -64,7 +64,7 @@ export const Label = styled.label<{ error?: boolean }>`
         &::before {
             content: attr(data-label);
             left: 16px;
-            top: -267px;
+            top: -254px;
             // bottom: 0;
             margin: auto;
             pointer-events: none;
