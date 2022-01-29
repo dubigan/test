@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-// require('dotenv').config({ path: './.env.local' });
+// require('dotenv').config({ path: './.env' });
 module.exports = {
   reactStrictMode: true,
   env: {
