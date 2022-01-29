@@ -6,6 +6,7 @@ import type { AppProps } from 'next/app';
 import { AlertProvider } from '../components/lib/alert/AlertContext';
 import Layout from '../components/Layout';
 
+
 type ComponentWithPageLayout = AppProps & {
     Component: AppProps['Component'] & {
         PageLayout?: React.ComponentType;

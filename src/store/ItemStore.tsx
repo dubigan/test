@@ -25,7 +25,6 @@ class ItemStore<T extends TBaseItem> {
         //     this,
         //     {
         //         item: observable,
-        //         _itemInfo: observable,
         //         loadItem: flow.bound,
         //     },
         //     { autoBind: true },

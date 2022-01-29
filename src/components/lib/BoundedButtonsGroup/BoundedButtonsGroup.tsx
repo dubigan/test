@@ -14,7 +14,7 @@ type TBoundedButtonsGroup = {
     cssForButton?: string;
     defBtn?: number;
     values?: string[];
-    setValue?: ((v: string | null) => void) | null;
+    setValue?: ((v: string | null | undefined) => void) | null;
     idGenerator?: (() => string) | null;
     emptySelection?: boolean;
 };
@@ -56,7 +56,7 @@ const BoundedButtonsGroup = ({
         );
     }, [children]);
 
-    const findChild = (element: HTMLElement) : HTMLElement | null => {
+    const findChild = (element: HTMLElement | null) : HTMLElement | null => {
         if (!element) return null;
         if (element.id === groupId) return null;
         if (element.id && element.id !== '__next') return element;
@@ -76,7 +76,7 @@ const BoundedButtonsGroup = ({
             ? setValue?.(child.dataset[DATAVALUE_KEY.split('-')[1]])
             : setValue?.(null);
 
-        Array.from(child.parentElement.children).forEach((c) => {
+        Array.from(child.parentElement!.children).forEach((c) => {
             // console.log(c.id, child.id);
             if (c.id !== child.id) c.classList.remove(ACTIVE_CLASSNAME);
         });
