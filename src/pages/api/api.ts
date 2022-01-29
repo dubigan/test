@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_HOST;
-// 'https://pskov.herokuapp.com/testforjob/';
+// const BASE_URL = process.env.NEXT_PUBLIC_API_HOST;
+const BASE_URL = 'https://pskov.herokuapp.com/testforjob/';
 // console.log('api BASE_URL', BASE_URL);
 // const BASE_URL = 'https://localhost:8002/';
 // const BASE_URL = "http://192.168.2.105:5000/testforjob/";
