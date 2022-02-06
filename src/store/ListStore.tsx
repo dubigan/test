@@ -1,9 +1,9 @@
-import {computed, flow, makeAutoObservable, makeObservable, observable, runInAction} from 'mobx';
-import {TDeleteItemProps, TLoadItemsProps, TSortedBy} from '../components/List/ListTypes';
+import { computed, flow, makeAutoObservable, makeObservable, observable, runInAction } from 'mobx';
+import { TDeleteItemProps, TLoadItemsProps, TSortedBy } from '../components/List/ListTypes';
 import api from '../pages/api/api';
-import {onBecomeObserved} from "mobx/src/api/become-observed";
-import {TItemInfo, TItemType} from "../components/Detail/DetailTypes";
-import itemInfo from "../components/Detail/useItemInfo";
+import { onBecomeObserved } from 'mobx/src/api/become-observed';
+import { TItemInfo, TItemType } from '../components/Detail/DetailTypes';
+import itemInfo from '../components/Detail/useItemInfo';
 
 class ListStore<T> {
     _list: T[] = [];
@@ -24,7 +24,7 @@ class ListStore<T> {
             this._list = res.data;
             // console.log('ItemsStore.loadItems this.items', this.items);
         });
-    };
+    }
     async deleteItem(props: TDeleteItemProps) {
         const res = await api.queryServer(props.url, {
             // sorted_by: sortedBy,
@@ -36,7 +36,6 @@ class ListStore<T> {
             this._list = res.data;
             // console.log('ItemsStore.loadItems this.items', this.items);
         });
-
     }
     get list() {
         return this._list;

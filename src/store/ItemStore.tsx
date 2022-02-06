@@ -1,7 +1,8 @@
 import { flow, makeAutoObservable, makeObservable, observable, runInAction } from 'mobx';
 import {
     E_BASE_ITEM,
-    E_DETAIL, E_ITEM_KEY,
+    E_DETAIL,
+    E_ITEM_KEY,
     TBaseItem,
     TCarItem,
     TItem,
@@ -36,8 +37,8 @@ class ItemStore<T extends TBaseItem> {
         const item_pk = sessionStorage.getItem(this._itemInfo.idKey) || -1;
 
         // @ts-ignore
-        const res = yield api.queryServer(this._itemInfo.url, { [this._itemInfo.idKey]: item_pk });
-        // console.log('ItemStore.loadItem', res.data);
+        const res = yield api.queryServer(this._itemInfo.url, { item_pk });
+        console.log('ItemStore.loadItem', res.data);
         runInAction(() => {
             this.item = this.getItemFromData(res.data);
         });
